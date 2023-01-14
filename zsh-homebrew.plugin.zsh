@@ -16,7 +16,11 @@ load_brew () {
     # standard system paths.
     #
     # ref: https://docs.brew.sh/Manpage#shellenv
-    eval "$(${brew_path}/bin/brew shellenv)"
+    if (( $+functions[znap] )) ; then
+        znap eval homebrew "${brew_path}/bin/brew shellenv"
+    else
+        eval "$(${brew_path}/bin/brew shellenv)"
+    fi
 
     # Add shell completion for brew and brew-installed tools
     #
