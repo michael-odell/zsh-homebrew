@@ -11,10 +11,9 @@ load_brew () {
         return
     fi
 
-    # The brew shellenv code doesn't play nicely with subshells (for instance, in tmux), it may add
-    # itself to the path a second time in a new spot.  But it always sets HOMEBREW_PREFIX, so if that's
-    # unset I know I haven't called it yet.
-    if [[ -z "${HOMEBREW_PREFIX:-}" ]] ; then
+    # ~call the hombrew code for login shells (such as tmux shells), because in those cases /etc/profile
+    # on the mac has removed brew's starting path position.
+    if [[ -o login ]] ; then
 
         # This (minus the cached-source) is the way brew officially seems to expect you to set up its
         # variables, although I don't like that it puts itself in front of standard system paths.
